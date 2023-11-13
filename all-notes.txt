@@ -30600,6 +30600,10 @@ Types of Components :
             }
         }
 
+* difference betwee class component and functional component : 
+    class component has state but functional components are plain JavaScript functions. 
+    Thus to maintain state inside the function, React provides several hooks like useState
+
 JSX (JavaScript language syntax) : 
     * transiles to pure JS which is understood by Browser
     * Write XML-like code for elements and component
@@ -30629,6 +30633,7 @@ setState :
         setCount( count + 1 ) 
         } 
         \\ here will increment by 3 because we are using prev ( update count value ) 
+        \\ React groups multiple state updates into a single re-render for better performance
         Const handleClick = () => {
         setCount( prev => prev + 1 ) 
         setCount( prev => prev + 1 ) 
@@ -30660,10 +30665,10 @@ Conditional render (exp. userGreeting.js):
     [1] if / else
     [2] Variable
     [3] ternary operator
-    [4] short circuit operator
+    [4] short circuit operator (&&) or nullish coalescing operator(??)
 
 Keys of list :
-    * has to be uniquex
+    * has to be unique
     * to avoid a warning message on list (EXP. persons.js) add key property to each child
     * Key is not a prop (you can not access it see persons.js)
     * it is not recommended to use index as key because React link the item list to it's key
