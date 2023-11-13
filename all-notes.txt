@@ -30621,6 +30621,19 @@ setState :
     * has two Parameters (state Object , callBack Function)
     * 1st parameter (state object) can be replaced by function and this function has 2 parameters (prevState , props)
     * when you have to update state based on previous state value , pass in a functions as an argument to the setState method instead of state object
+        Let [count , setCount] = useState(0)
+        \\ here will increment count by 1 not 3 because in all line count is zero ( not updated number so will re-render only one time )
+        Const handleClick = () => {
+        setCount( count + 1 ) 
+        setCount( count + 1 ) 
+        setCount( count + 1 ) 
+        } 
+        \\ here will increment by 3 because we are using prev ( update count value ) 
+        Const handleClick = () => {
+        setCount( prev => prev + 1 ) 
+        setCount( prev => prev + 1 ) 
+        setCount( prev => prev + 1 ) 
+        } 
     * ASYNC Method (see exp. in counter.js) to solve this problem use 2nd parameter of setState Method 
     * 2nd Parameter used when you want to change state and invoke another function that use the new value of the state (see exp. in parentComponent.js)
 
@@ -30881,6 +30894,10 @@ useEffect Hook (replacment for componentDidMount , componentDidUpdate and compon
 
     ** Note : the function inside useEffect can return another function(cleanup function) and this returned function will be excuted
     when the component unmounted (see HookMouse.js) (replacment componentWillUnmount in MouseClass.js)
+    useEffect built in such a way that we can return a function inside it and this return function is where the cleanup happens.
+    https://www.zipy.ai/blog/understanding-react-useeffect-cleanup-function#:~:text=Cleaning%20up%20event%20listeners,-When%20the%20component&text=The%20useEffect%20hook%20can%20be,window%20object%20inside%20the%20hook.
+
+    ** useEffect runs on every render but not props change
 
 useContext Hook : 
     * incase of nested consumers like in (ComponentB.js) you can use useContext(UserContext) and add UserContext (which is created by react.createContext() in App.js) as parameter
@@ -32925,6 +32942,12 @@ but in nextjs by default will combine those 2 fetches to one fetch.
         [2] path=/ ( / means home page)
         [3] &secret=DaveGrayTeachesCode ( we added secret token to do revalidation only with this token)
 
+
+* Note : 
+    If you import server component inside client component will be also client component 
+    But if you pass server component as child to client component will remain server component that’s why you can wrap your app with client side provider and will not change your server side components
+    See this ( https://youtu.be/9YuHTGAAyu0?si=vhW26hHqNPWTmRVM)
+    
 * server Actions ( check ToDoList project folder ) : 
     They enable server-side data mutations, reduced client-side JavaScript, 
     and progressively enhanced forms
@@ -33062,6 +33085,13 @@ but in nextjs by default will combine those 2 fetches to one fetch.
     [1] custom animation 
         add keyframes and animation inside theme.extends in tailwind.config.js then add animate-nameOfAnimation class to element ( like in Lesson04)
     [2] default tailwind animation ( like animate-spin)
+
+* to solve the Error of tailwind in global CSS File :
+    1. Open the CSS file where you import Tailwind CSS
+    2. Press Ctrl + Shift + P and search for “change language mode”
+    3. Inside the search bar, type “tailwindcss” and select it.
+    4. Now your CSS file is associated with Tailwind CSS instead of regular css and the warnings should be gone.
+
 
 ***************************************** SASS *****************************************
 
@@ -33758,6 +33788,21 @@ Express :
 
     see MongoDB Video from this list ( https://youtube.com/playlist?list=PL0Zuz27SZ-6PFkIxaJ6Xx_X46avTM1aYw&si=6DenB09VA9AZ5tS1)
 
+* Authentication ( next-auth ) Steps : 
+[1] npm i next-auth
+[2] create folder api/auth/[...nextauth]/route.ts
+[3] route.ts : inside hander add :
+    [a] Providers 
+    [b] async authorize (here you write your logic from where will you get username and        password from data base and compare them to credentials (what user typed at input fields))
+    [c] pages (if you want to create custome page for signIn and signOut) 
+    [d] secret token (from .ev.local ))
+[4] use async signIn ( 2 parameters ( credentials , options object)) and signOut 
+    (1 parameter options object) Methdos
+[5] use useSession if you want to get data and status of Authorization (1 - authenticated , 2 - authenticated , 3 - loading )( user signed in or not or loading)
+
+
+
+
     
 ***************************************** Algorithm *****************************************
 
@@ -34228,5 +34273,4 @@ Object.entries() - O(n)
 * Graph :
     A graph is a non-linear data structure that consists of a finite number of vertices (also called nodes) connected by edges
     Trees are a specific type of graph data structure.
-
 
