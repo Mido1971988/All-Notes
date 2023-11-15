@@ -30764,7 +30764,7 @@ memo (because pure component does not work with functional component we use memo
     * export default React.memo(MemoComp) / React.memo() called higher order component (later will discuss)
 
 ref (reference can by added to DOM element or class Component): 
-    * you can create a ref object by React.createRef() in constructor and use ref attribute on element to link this element to created ref
+    * you can create a ref object by React.createRef() in constructor and use ref attribute on HTML element to link this element to created ref
     and this element will be stored as property called current so you can get it by this.myRef.current and you can for exp. Focus on it by this.myRef.current.focus() 
     * or you can add ref attribute to class component inside parent component and access this component by this.inputComp.current see (focusInput.js)
 
@@ -30779,7 +30779,7 @@ callback ref :
 
 forward ref : 
     * a technique that forwards a ref through a component to one of its children
-    * React.forwardRef(component) accept a component as a parameter and this component accept two parameter props and ref see (FRInput.js)
+    * React.forwardRef(component) accept a component as a parameter and this component accept two parameter props and ref see (FRInput.js and FRParentInput.js)
 
 Protals : 
     * root in React : in index.js you will find that we are creating a root using ReactDOM.createRoot() method
@@ -30807,9 +30807,9 @@ Higher Order Component HOC : is a pattern that takes a component as an argument 
     
 Render Props : 
     * render prop is a technique for sharing code between React Components using a prop whose value is a function
-    * same concept of HOC you have function and you need to write it to ClickCounterTwo and HoverConuterTwo so you can use 3rd component
-    like RenderProps.js and then you can add property(render property) to RenderProps component and this property can be a function and this function accepts
-    parameters and return ClickCounterTwo or HoverConuterTwo component and add those paramters as property to them (now you shared them ) 
+    like RenderProps.js and then you can add property(you can name this prop render or any other name) to RenderProps component and 
+    this property can be a function and this function accepts parameters and return ClickCounterTwo or HoverConuterTwo component 
+    and add those paramters as property to them (now you shared them ) 
     and last step to call render property inside RenderProps.js
 
 context : 
@@ -30819,7 +30819,7 @@ context :
     * Steps : 
         [1] create Context (see UserContext.js) : using React.createContext() Method then take from it 2 components Provider and Consumer
         [2] add Provider Component to APP Component and add property called value to it then inside Provider add ComponentA
-        [3] add Consumer to GrandChild (ComponentC) and insid Consumer add function the parameter of this function is the property value that you added to Provider
+        [3] add Consumer to GrandChild (ComponentC) and inside Consumer add function the parameter of this function is the property value that you added to Provider
 
     * you can add default value by adding it as parameter inside React.createContext() Method and if you didn't add Provider in APP.js 
     Consumer will search for Provider if not found will use default value
@@ -30868,7 +30868,7 @@ HOOKS :
     * Avoid the confusion of this keyword
     * Allow you to reuse stateful logic
     * Organize the logic inside a component into reusable isolated units
-    * Only call Hooks at the Top Level (do not call hooks inside  loops, conditions or nested functions)
+    * Only call Hooks at the Top Level (do not call hooks inside loops, conditions or nested functions)
     * Only call Hooks from React Functions (call them from React Functional Component not regular JS Function)
 
 useState Hook (lets you to add state to function component) : 
@@ -30880,8 +30880,7 @@ The Update Method that's returned from useState : (two options to use it) (see H
     [1] setState(new state value)
     [2] setState(function accepts prevState as an argument) this is safer incase of Batching
 
-    * Difference between it and setState is setState merge the object but The Update Method does not (see ClassCounterThree.js and HookCounterThree.js)
-     
+    * Difference between set state in class and setState Hook is setState merge the object but The set state in class does not (see ClassCounterThree.js and HookCounterThree.js)
     * for EXP. we have state object {firstName:"" , lastName: ""} when you use setState({firstName : "Soliman"}) 
     will not remove lastName property and state object will be like this {firstName:"Soliman" , lastName: ""}
     but with the Update Method when you setName({firstName : "Soliman"}) will remove lastName property
@@ -30925,7 +30924,7 @@ useReducer : is used for state management (alternative to useState)
 
     * you can combine useReducer and useContext Hooks like in ComponentD.js
 
-    * useState is mostly used when types of states are number, boolean, and string. useReducer is used when types of states are objects and arrays.
+    * useState is mostly used when types of states are number, boolean, array , object , string. useReducer is used when types of states are nested objects and nested arrays.
 
 react.memo : 
     * is a higher order component that's prevent the functional component to re-render if the props or stats did not change like in (Title.js or Count.js or Button.js)
@@ -30946,7 +30945,7 @@ useMemo Hook :
     * like useCallback Hook but will return a value of excuted function and will excute this function only if one of the Dependancies has changed
     * Exp in (MemoCounter.js) when MemoCounter Component renders isEven Function(contains while loop) will excute and take long time
     and MemoCounter component will re-render when you click on Count One or Two because you are changing state from incrementOne or incrementTwo Functions
-    but by using useMemo Hook you solve this problem
+    but by using useMemo Hook isEven function will be excuted only if click on Count One not two because you add counterOne in dependency array
 
 useRef Hook : 
     * with useRef Hook you can access DOM Node directly from Functional Component.
