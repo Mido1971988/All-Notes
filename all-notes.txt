@@ -30966,12 +30966,6 @@ custome Hook :
     * EXP2. useCounter is a custome Hook and we use it with CounterOnee.js and CounterTwoo.js
     * EXP3. useinput is a custome Hook and we use it with UserForm.js
 
-Ways to cause Re-render : 
-[1] useState setter function
-[2] useReducer dispatch funcion
-[3] if parent Component re-renders
-[4] React Context
-
 Render (initial Render ) steps in React : 
     [A] Render Phase : 
         React start from Root Component Tree and move downwards and at each element invoke createElement() Method to convert JSX to React Elements and store it
@@ -30992,7 +30986,7 @@ Re-render Steps in React :
         Take the changes from Re-Render Phase and apply them to the DOM using React DOM Package 
 
 ** if state value is primitive : 
-useState setter function : if you update to the same value of current state will not re-render (except if not after initial Render cycle will re-render one more time then will not re-render again ) 
+useState setter function : if you update to the same value of current state will not re-render (will re-render one more time then will not re-render again but if after initial render will not re-render one more time ) 
 (if this is 1st re-render cycle and value is the same of initial Value the React will exit before comparing previous render to new Render
 but if this is not 1st re-render and value is the same of current Value React will continue to comparing previous render to new Render and then Exit before commit phase)
 
@@ -31035,12 +31029,14 @@ to avoid unnecessary re-render of Child :
 
 Incorrect Optimization : 
 
-    [1] ChildThree.js (wrapped with memo) will re-render even if you press count button in ParentThree.js because props.children is always a new reference (if it's a HTML Element <strong></strong> same concept of reference in objects but if normal text same concept of primitive values will not be new reference so props will not change so ChildThree will no re-render) 
+    [1] ChildThree.js (wrapped with memo) (will re-render when press name button beacause you are passing name as a prop from parent to child)
+    will re-render even if you press count button in ParentThree.js because props.children is always a new reference 
+    (if it's a HTML Element <strong></strong> same concept of reference in objects but if normal text same concept of primitive values will not be new reference so props will not change so ChildThree will not re-render) 
     when ParentThree.js re-render create new HTML with new reference) so you are changing the props of ChildThree every Time ParentThree.js re-render
 
-    [2] same reason on [1] ChildFive.js will re-render event if you press count button in ParentFour.js because prop is always a new reference (when ParentFour.js re-render create new person object or new handle funcion with new reference) so change props of ChildFive.js so will re-render
+    [2] same reason on ChildFive.js will re-render event if you press count button in ParentFour.js because prop is always a new reference (when ParentFour.js re-render create new person object or new handle function with new reference) so change props of ChildFive.js so will re-render
 
-    [3] ChildFour.js has now Date in JSX but you are wrapping it with memo so when you press on count buttion in parentThree.js ChildFour.js will not re-render (because of memo) so Date will not be updated in UI (Impure component)
+    [3] ChildFour.js has now Date in JSX but you are wrapping it with memo so when you press on count button in parentThree.js ChildFour.js will not re-render (because of memo) so Date will not be updated in UI (Impure component)
 
 to Solve Incorrect Optimization you can use useMemo & useCallback Hooks (like in ParentFour.js) :
     we used useMemo(() => person, []) so we returned person object only one time because of empty Dependancy array event if ParentFour re-render person object is the same and same reference
