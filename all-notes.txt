@@ -31061,7 +31061,7 @@ when you add children to component in App.tsx file you have to write the childre
     
 You can add Event handler function as prop but you have to write () => void as type in component file and if we want to use event parameter : 
     * Event (Click Event) >>> event: React.MouseEvent<HTMLButtonElement> in Button.jsx 
-    * Event (Input Cahnge Event) >>> event: React.ChangeEvent<HTMLInputElement> in Input.jsx 
+    * Event (Input Change Event) >>> event: React.ChangeEvent<HTMLInputElement> in Input.jsx 
 
 You can add css properties as a prop but you have to write styles: React.CSSProperties as type in component like in (Container.tsx)
 
@@ -31106,7 +31106,11 @@ Context with typescript :
 
 non-null assertion operator : 
     operator tells the compiler to ignore the possibility of it being null.
+    (but not recommended to use it bceause if became null will give you error and will crash the application)
     https://blog.logrocket.com/understanding-exclamation-mark-typescript/
+
+Type predicate Function 
+https://matiashernandez.dev/blog/post/what-are-type-predicates-in-typescript
 
 useRef with typescript : 
     [1] ref for DOM Element (like in DomRef.tsx)
