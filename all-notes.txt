@@ -31158,7 +31158,7 @@ Generics with typescript and react (in List.tsx):
     * <T extends {}> means will accept anything like type any
     * <T extends { id: number }> means will accept object but this object must has property call id and it's value is number 
 
-Restriction with typescript (in RandomNumber) :
+Restriction with typescript (in RandomNumber.tsx) :
     here we have 4 properties 
     [1] value : common with all possibilities
     [2] isPositive 
@@ -31198,7 +31198,7 @@ Extracting a Components Prop Types (in CustomComponents.tsx) :
 
 Polymorphic Component (in Text.tsx) :
     * we added Omit<React.ComponentProps<E>, keyof TextOwnProps<E>> 
-    because we do not want conflict between the types of own props and types of all default props of React.ComponentProps
+    because we do not want conflict between the types of textOwnProps and types of all default props of React.ComponentProps
 
 
 ------------------------------
