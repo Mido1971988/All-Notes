@@ -31214,7 +31214,8 @@ Steps To create Redux project :
 [1] npm init --yes
 [2] npm install redux
 
-* JS doesn’t have access to change state in Redux state container directly it should tell mediator ( Reducer ) what changes to the state ( action ) and the mediator ( Reducer ) will inform the Store the required changes on the state 
+* JS doesn’t have access to change state in Redux state container directly it should tell mediator ( Reducer ) 
+what changes to the state (object returned according to action.type in reducer function) and the mediator ( Reducer ) will inform the Store the required changes on the state 
 
 * Reducer accepts two parameters ( previous state , action )  and return the new state to the application 
 
@@ -31229,14 +31230,14 @@ Action creator : is a function that return an action object
 Redux Store : 
 * allow access to state by getState() method
 * Allow state to be updated by dispatch(action)
-* Register listener via subscribe(listener) this is the link between store and JS application ( will execute listener function each time state changes) 
+* Register listener via subscribe(listener) this is the link between store and JS application ( will execute listener function each time state in redux store changes) 
 * You can unregister to the store by calling the function returned by subscribe(listener) 
 
 To create Redux store 
 [1] Const redux = require(‘redux’)
 [2] const store = redux.createStore(reducer) 
 [3] const unsubscribe = store.subscribe(listener)
-[4] store.dispatch(action)
+[4] store.dispatch(action creator)
 [5] unsubsrcibe() 
 
 
@@ -31244,10 +31245,13 @@ Combine reducers :
 You can use one reducer for multiple actions but for large projects it’s better to use multiple reducers with multiple actions 
 
 Steps : 
-[1] const rootReducer =redux.combinereducers({cake: cakeReducer , iceCream : iceCreamducer })
+[1] const rootReducer =redux.combinereducers({cake: cakeReducer , iceCream : iceCreamReducer })
 
 Middleware : 
 Provides a 3rd party extension point between dispatching an action and the moment it reaches the reducer 
+steps : 
+[1] const applyMiddleware = redux.applyMiddleware
+[2] const store = createStore(reducer , applyMiddleware(middleware Func like logger or thunk))
 
 * To install Logger ( npm install redux-logger ) ( will show you what happend , will show you each step at console)
 Steps : 
@@ -31289,7 +31293,7 @@ if it returns a function then pass dispatch as an argument to that function.
     [2] import { composeWithDevTools } from 'redux-devtools-extension'
     [3] const store = createStore(rootReducer ,composeWithDevTools( applyMiddleware(logger)))
 
-* in NewCakeContainer.js weadded input html element to ask customer how many cakes he wants to buy 
+* in NewCakeContainer.js we added input html element to ask customer how many cakes he wants to buy 
 then add the number as argument to action creator function then this number will be added as payload property in action object
 
 * Steps of Async in react-redux in (userContainer.js): 
