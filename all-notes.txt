@@ -31308,7 +31308,9 @@ then add the number as argument to action creator function then this number will
     [3] create rootReducer.js if we want to combine more than one Reducer
     [4] create store.js to create store and add applyMiddleware if needed
     [5] create index.js if we want to import from ../redux folder without write specific location like import { buyCake, buyIceCream } from '../redux'
+    [6] wrap the the main component in App.js with Provider 
     ** incase of Async we need to add thunk Middleware in store.js and use useEffect Hook in component and make async calls in Actions.js
+
 
 ---------------------------------
 
@@ -32997,7 +32999,30 @@ but in nextjs by default will combine those 2 fetches to one fetch.
         if not will uncheck the box
 
     
+** Redux Toolkit with Nextjs 13 :
+[1] create Store by const store = configureStore({reducer : {auth.reducer}})
+[2] create slice by const auth = createSlice({ name : "auth" , intialState , reducers : { reducer functions}})
+[3] export const { logIn , logOut } = auth.actions; (logIn annd logOut are automatically created action creator functions corresponding to reducers function)
+[4] export default auth.reducer; (this will be added to configureStore )
+[5] create Provider component and wrap childeren with this Provider in layout.tsx
+[6] const dispatch = useDispatch()
+[7] dispatch(logIn()) or dispatch(logOut()) onClick on Buttons
+[8] const username = useSelector((state) => state.auth.reducer.value.username)  (useSelector to get state and show it to User )
+* notes : 
+    - configureStore:
+        * Call combineReducers to combine your slices reducers into the root reducer function
+        * Add the thunk middleware and called applyMiddleware
+        * In development, automatically add more middleware to check for common mistakes like accidentally mutating the state
+        * Automatically set up the Redux DevTools Extension connection
+        * Call createStore to create a Redux store using that root reducer and those configuration options
 
+    - CeateSlice :
+        A function that accepts an initial state, an object of reducer functions, 
+        and a "slice name", and automatically generates action creators and action types that correspond to the reducers and state.
+    
+    - useDispatch hook does not cause re-render but useSelector cause re-render
+
+    
 ***************************************** TailWind CSS *****************************************
 * Tailwind CSS :  is an open source CSS framework
 
