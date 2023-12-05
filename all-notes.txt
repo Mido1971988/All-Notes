@@ -31357,13 +31357,13 @@ then add the number as argument to action creator function then this number will
 * if the user try to write wrong route you can add <Route path='*' element={<NoMatch/>}/> in App.js to route the user to NoMatch page
  - note : path='*' means any path not exist in Routes
 
-* nested Routes :  you can easily nest <Route><Route/></Route> see Products.js 
-    - note : do not forget to import import { Link, Outlet } from 'react-router-dom' and use Outlet component inside Products.js
+* nested Routes :  you can easily nest <Route><Route/></Route> see App.js and Products.js 
+    - note : do not forget to import { Link, Outlet } from 'react-router-dom' and use Outlet component inside Products.js
     An <Outlet> should be used in parent route elements to render their child route elements. This allows nested UI to show up when child routes are rendered
 
 * index Route : if you want to render child nested component automatically when parent render you can use 
-    <Route index element={<FeaturedProducts/>}/> with index instead of path prop now when go to / products will 
-    render product parent and FeaturedProducts child
+    <Route index element={<FeaturedProducts/>}/> with index instead of path prop now when go to /products will 
+    render product parent and FeaturedProducts child and url will be /products not /products/feature
     - note : Difference between adding <Route path="/users/admin" element /> and <Route path="user" element><Route path="admin" element/></Route>
     is nested child will render under parent so on webpage you will see both parent and child 
     but incase path="/users/admin" you will see only admin page without users page
@@ -31379,6 +31379,8 @@ then add the number as argument to action creator function then this number will
 * useSearchParams Hook see(Users.js) : 
     [1] import { useSearchParams } from 'react-router-dom'
     [2] const [searchParams, setSearchParams] = useSearchParams() ( same concept of useState Hook)
+    note : setSearchParams({filter : active}) will add search param filter=active to url 
+    and you can check the if the url has a search param by using searchParams.get("filter") 
 
 * Relative Links see(Products.js) : 
     <Link to='featured'>Featured</Link>
@@ -31390,6 +31392,7 @@ then add the number as argument to action creator function then this number will
     [1] import React from 'react'
     [2] const LazyAbout = React.lazy(() => import('./components/About'))
     [3] <React.Suspense fallback='Loading...'><LazyAbout /></React.Suspense>
+    * note : to understand lazy (https://mikeguoynes.medium.com/the-ultimate-guide-to-react-lazy-loading-4cacd8bd3cf0)
 
 * Authentication and protected Routes
     https://youtu.be/X8eAbu1RWZ4
@@ -31731,7 +31734,7 @@ we can add {...formik.getFieldProps("name")} (argument is the value of name attr
 
 -----------------------------
 Benefits of React styled component : 
-* Automatic critical CSS ( inject css styling only to the components will render 
+* Automatic critical CSS ( inject css styling only to the components will render )
 * No class name ( if you have two css files maybe will one will override the other if you use same class name like styles.css and app.css ) 
 * Easier deletion on css style ( because each css style is linked to specific component so when you delete a component will delete automatically it’s css style ) 
 * Dynamic CSS styling (means now css style can be different according to props of component )
