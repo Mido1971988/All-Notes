@@ -31419,6 +31419,7 @@ then add the number as argument to action creator function then this number will
         - Accessor : the name of column inside JSON file
         * You can choose what columns you want to extract from JSON file you should not extract all columns from JSON file
         * useMemo hook to ensure data doesn’t recreated every render
+        If we didn't use React.useMemo, the table would think it was receiving new data on every render and attempt to recalculate a lot of logic every single time. Not cool!
     [3] Use the data and columns defined to create a table instance 
         -using useTable Hook from react-table (in BasicTable.js )
     [4] Define a basic table structure using plain HTML
@@ -31435,8 +31436,9 @@ then add the number as argument to action creator function then this number will
     now you can pass column.getSortByToggleProps() as an argument to ...column.getHeaderProps() in <th> inside <thead> so will add props related to sorting features on this column 
 
 * Formatting : 
-    - react table needs a proper date format ( ISO ) to support sorting features so JSON file data format is ISO
-    but we can change UI Format to user after filter
+    - react table needs a proper date format ( ISO ) to support sorting features 
+    JSON file has data format ( ISO )
+    but we can change UI Format (dd/mm/yyyy) to user after Sorting
 
     -To format data in column you can : 
         Add cell after header , footer and accessor in column.js 
@@ -31459,7 +31461,7 @@ then add the number as argument to action creator function then this number will
     [2] Column filter : for specific column
         - useFilters hook : you can add it as 2nd argument to useTable hook 
         - Add ColumnFilter component (Filter: ColumnFilter) to every column in columns.js
-        - column.render('Filter') in FilteringTable.js
+        - column.render('Filter') in FilteringTable.js means will render ColumnFilter component ( from columns.js)
 
     * note : if you do not need to add (Filter: ColumnFilter) to every column you can use defaultColumn (dont forget to add it as an argument to useTable hook)will add it automatically to each column
     * useAsyncDebounce : incase of big data for better performance recommended to use useAsyncDebounce hook 
@@ -31488,6 +31490,7 @@ then add the number as argument to action creator function then this number will
 
 * Row Selection :
     - useRowSelect hook : you can add it as 2nd argument to useTable hook so you can destructure selectedFlatRows
+    - add arrow function to return array of selected Rows
 
 * Column Order (in ColumnOrder.js) :
     - useColumnOrder hook : you can add it as 2nd argument to useTable hook so you can destructure setColumnOrder method from the useTable Hook
@@ -31498,7 +31501,7 @@ then add the number as argument to action creator function then this number will
     - add getToggleHideAllColumnsProps if you want to hide all columns
     - add column.getToggleHiddenProps() if you want to hide one column only
 
-* Sticky Columns  (in StickyColumns.js):
+* Sticky Columns  (in StickyTable.js):
     - install package ( npm i react-table-sticky )
     - install package ( npm i styled-components )
     - useBlockLayout, useSticky hooks : you can add them as 2nd argument to useTable hook
