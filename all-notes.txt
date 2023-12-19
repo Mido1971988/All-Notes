@@ -31510,20 +31510,25 @@ then add the number as argument to action creator function then this number will
 -----------------------
 
 * Storybook : is an isolated development environment and playground for UI Component ( create component independently ) 
-
+when you work with a team and you want to try and see component away from your project or you want to show it to a client
+* Note : better to watch Videos not explained here well .
  
 * Install storybook package: 
 - npx create-react-app react-storybook-v6
 - npx sb init
 
-* In main.js in .storybook folder there is () that means will search for any file called .stories.js and will search inside this file for default export and named exports and run them so we don’t add button component to App.js
+* in Button.stories.js export default = { title : "Button" , component : Button } 
+title is the name of story will be shown on the left side , component Button from Button.js
+
+* In main.js in .storybook folder there is *.stories.@(js|jsx|ts|tsx) that means will search for any file called .stories.js 
+and will search inside this file for default export and named exports and run them so we don’t add button component to App.js
 
 
 * You can change story name like in ( Input.stories.js) Small.storyName = “Small Input”
 
-* If you want to sort stories alphabetically you can copy options object from stories docs and paste it in preview.js 
+* If you want to sort stories alphabetically you can copy options object from stories docs and paste it in preview.js .storybook folder 
 
-* You can merge stories in one story ( story within story ) like in ( Subscription.stories.js ) added Primary from input.stories and Large from Button.stories to Subsriptions.Stories.js
+* You can merge stories in one story ( story within story ) like in ( Subscription.stories.js ) import Primary from input.stories and Large from Button.stories to Subsriptions.Stories.js
 
 * Args in(Button.stories.js): 
     - Args can be used to dynamically change props, slots, styles, inputs, etc. It allows Storybook and its addons to live edit components
@@ -31547,7 +31552,7 @@ then add the number as argument to action creator function then this number will
 * Theming : 
     - install Chakra UI Packages : npm i @chakra-ui/react @emotion/react @emotion/styled framer-motion
     - same concept of decorators you wrap stories with theme (like wrap stories with <Center></Center> in Button.stories.js)
-    to add global decorators : 
+    to add global decorators in preview.js ( in V6): 
         decorators: [(Story) => (
                 <ThemeProvider theme={theme}>
                     <CSSReset />
@@ -31556,7 +31561,7 @@ then add the number as argument to action creator function then this number will
                     </Box>
                 </ThemeProvider>
                 )] 
-                in preview.js
+                
 
     * note : <Box m="4"> to add margin to the button    
              <CSSReset/> to add CSS from Chakra UI Packages
@@ -31583,7 +31588,7 @@ then add the number as argument to action creator function then this number will
         [2] add "@storybook/addon-a11y" in main.js
 
 * Environment Variable : 
-    [1] STORYBOOK_ in package.json file in scripts ("storybook": "STORYBOOK_THEME=dark storybook dev -p 6006",)
+    [1] STORYBOOK_ in package.json file in scripts ("storybook": "STORYBOOK_THEME=dark && storybook dev -p 6006",)
     [2] access it by (process.env.STORYBOOK_THEME)
     * note in window add (set STORYBOOK_THEME=dark &&) in mac without (set and &&)
 
@@ -31617,6 +31622,7 @@ and accepts argument object and this object can has  properties like  :
 
 * instead of adding [ onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.name}] to each input element in Form 
 we can add {...formik.getFieldProps("name")} (argument is the value of name attribute) and will add onChange , onBlur and value attribute automatically
+in Video 12 in React Formik tutorial
 
 * Formik component is a substitute for useFormik hook and steps are (in YoutubeFrom.js) : 
 [1] import Formik instead of useFormik
@@ -31648,7 +31654,7 @@ we can add {...formik.getFieldProps("name")} (argument is the value of name attr
     This function accepts props and this props object has (field , form , meta ) properties : 
         [1] field prop : values of this prop is object of ( name , onBlur , onChange and value ) to help you to manage state 
         [2] form prop : values of this prop is the same formik object that return from useFormik hook 
-        [3] gives you information if field visited or not , error exists or not and value ( used to render error messages ) 
+        [3] meta prop : gives you information if field visited or not , error exists or not and value ( used to render error messages ) 
 
 * ErrorMessage render text not html element to force ErrorMessage to render html element instead of just rendering a text : 
     [1] add  component=‘div’ prop 
@@ -31673,8 +31679,8 @@ we can add {...formik.getFieldProps("name")} (argument is the value of name attr
         [1] import FieldArray from 'formik'
         [2] add the array to initialValue (phNumbers: [""])
         [3] in FieldArray add name="phNumber"
-        [4] use Render Props pattern ( children is a function and inside this function will accept fieldArrayProps as parameter and 
-            destructure form , remove , push from fieldArrayProps then will destructure values from form then will destructure phNumbers array from values ) 
+        [4] use Render Props pattern ( children is a function and inside this function will accept fieldArrayProps as parameter ( code inside FieldArray parent Component is return props.children({form , remove , push}) ) 
+            and destructure form , remove , push from fieldArrayProps then will destructure values from form then will destructure phNumbers array from values ) 
         [5] map on phNumbers array to render Field Component and you can add more element to phNumbers array using push method (that will render more Field component) 
             and you can remove element from phNumbers array (that will remove Field Component)
 
@@ -31692,25 +31698,26 @@ we can add {...formik.getFieldProps("name")} (argument is the value of name attr
 
 * Field level Validation (for specific Field) : 
     - before in OldYoutubeForm.js we used two ways for validation [1] validate [2] validateSchema Yup liberary
-    and both of validations ways are top level whichs means can validate the selected Field from validate function or validateSchema object
+    and both of validations ways are top level whichs means can validate all Field from validate function or validateSchema object
     - steps for Field level Validation : 
         [1] define validate function (like validate function in top level validation ... the function (validateComments) accept value of comments Field as parameter )
         [2] add validate property to comments Field and assign validateComments function to this prop 
 
 * Manually triger validation : 
-    [1] you needs to use render props pattern form entire From : children of Formik Component is a function whichs accept 
+    [1] you needs to use render props pattern on entire From : children of Formik Component is a function whichs accept 
     formik object as parameter ( with formik object we can control manual triger of validation) values of this parameter is the same formik object that return from useFormik hook and also same value of form object in render props in address field
-    [2] add onClick event and the function is formik.validateField() ... empty paramter means will validate all field or you can write which field you want to validate 
+    [2] add onClick event and the function is formik.validateField() ... empty paramter means will validate all field (or use formik.validateForm()) or you can write which field you want to validate 
         (but also will not give you the Error because we have 2 conditions to give you error 1st condition is didn't write anything in Field and 2nd condition is touching the Field (click inside and then click outside))
     [3] add onClick event and the function is formik.setTouched() ... here you should write which fields you want to set as touched fields empty parameter not allowed
         (now will give you the Error)
+        (or use formik.setFieldTouched("comments") and add name of field as parameter)
 
 * How to Stop Submit : [1] when form is invalid [2] during submitting process
     [1] when form is invalid :
         (a) formik.isValid : readonly prop true if error object is empty 
         (b) add disabled={!formik.isValid} to submit button so the button will be disabled when form is invalid
         - note : if you want to disable the submit button once page mount you can add validateOnMount prop to Formik Field
-        - formik.dirty : boolean value prop true if you change a value of any field (not blur should type inisde the field and change the value)
+        - formik.dirty : boolean value prop true if you change a value of any field from initail values (not blur should type inisde the field and change the value)
 
     [2] during submitting process (means when you press on submit we want to disable submit button till submition process to server finish then we can submit again to prevent double submittion at the same time)
         (a) formik.isSubmitting : boolean value true if submission is in process
@@ -31731,7 +31738,7 @@ we can add {...formik.getFieldProps("name")} (argument is the value of name attr
 
 * formik videos end at video 30 ... from video 31 we are building an Example and use what we learned
 
-* ChakraInput library in(chakraInput.js): 
+* ChakraInput library in(chakraInput.js) to take care of styling: 
     -Form control component has isInvalid prop if false will not render FormErrorMessage component 
     -Benefits of using ChakraInput Library is no need to write css or create TextError.js and pass it as component prop inside ErrorMessage 
 
